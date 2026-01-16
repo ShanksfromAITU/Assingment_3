@@ -7,6 +7,9 @@ public class Student extends Person {
         this.age = age;
         this.gpa = gpa;
     }
+    public int getAge() {
+        return age;
+    }
 
     public double getGpa() {
         return gpa;

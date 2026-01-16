@@ -14,17 +14,17 @@ public abstract class Person {
     public abstract void display();
 
     @Override
-    public String toString() {
-        return "Person{name='" + name + "'}";
-    }
+      public String toString() {
+          return "Person{name='" + name + "'}";
+      }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return Objects.equals(name, person.name);
-    }
+      @Override
+      public boolean equals(Object o) {
+          if (this == o) return true;
+          if (o == null || getClass() != o.getClass()) return false;
+          Person person = (Person) o;
+          return Objects.equals(name, person.name);
+      }
 
     @Override
     public int hashCode() {

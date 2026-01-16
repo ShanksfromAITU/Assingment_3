@@ -1,29 +1,83 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<Person> dataPool = new ArrayList<>();
 
-        dataPool.add(new Teacher("Adilet Duman", "Discrete math", 10));
-        dataPool.add(new Teacher("Orazova Arailym", "OOP", 5));
-        dataPool.add(new Student("Toretay Ali", 18, 1.7));
-        dataPool.add(new Student("Mukhamedsharip Aibyn", 19, 3.5));
+        Scanner scanner = new Scanner(System.in);
+        DatabaseHandler db = new DatabaseHandler();
 
-        Institution i1 = new Institution("AITU", "Astana");
-        i1.display();
+        System.out.println("--- Educational Management System ---");
 
-        System.out.println("\n--- Sorted by name ---");
-        dataPool.sort(Comparator.comparing(Person::getName));
-        dataPool.forEach(Person::display);
+        boolean running = true;
 
-        System.out.println("\n--- Filtering (GPA > 2.0) ---");
-        dataPool.stream()
-                .filter(p -> p instanceof Student && ((Student) p).getGpa() > 2.0)
-                .forEach(Person::display);
+        while (running) {
+            System.out.println("\nChoose action:");
+            System.out.println("1 - Add student");
+            System.out.println("2 - Show all students");
+            System.out.println("3 - Update student GPA");
+            System.out.println("4 - Delete student");
+            System.out.println("0 - Exit");
 
-        System.out.println("\n--- Searching (Teacher Adilet) ---");
-        dataPool.stream()
-                .filter(p -> p instanceof Teacher && p.getName().contains("Adilet"))
-                .forEach(Person::display);
+            System.out.print("Your choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            try {
+                switch (choice) {
+
+                    // CREATE
+                    case 1:
+                        System.out.print("Enter name: ");
+                        String name = scanner.nextLine();
+
+                        System.out.print("Enter age: ");
+                        int age = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Enter GPA: ");
+                        double gpa = Double.parseDouble(scanner.nextLine());
+
+                        db.addStudent(new Student(name, age, gpa));
+                        break;
+
+                    // READ
+                    case 2:
+                        System.out.println("\nAll students from Database:");
+                        db.readAllStudents();
+                        break;
+
+                    // UPDATE
+                    case 3:
+                        System.out.print("Enter student ID: ");
+                        int updateId = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Enter new GPA: ");
+                        double newGpa = Double.parseDouble(scanner.nextLine());
+
+                        db.updateStudentGpa(updateId, newGpa);
+                        break;
+
+                    // DELETE
+                    case 4:
+                        System.out.print("Enter student ID to delete: ");
+                        int deleteId = Integer.parseInt(scanner.nextLine());
+
+                        db.deleteStudent(deleteId);
+                        break;
+
+                    // EXIT
+                    case 0:
+                        running = false;
+                        System.out.println("Program finished.");
+                        break;
+
+                    default:
+                        System.out.println("Invalid option.");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        scanner.close();
     }
 }

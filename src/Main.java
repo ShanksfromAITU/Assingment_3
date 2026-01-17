@@ -16,7 +16,6 @@ public class Main {
             System.out.println("2 - Show all students");
             System.out.println("3 - Update student GPA");
             System.out.println("4 - Delete student");
-            System.out.println("0 - Exit");
 
             System.out.print("Your choice: ");
             int choice = Integer.parseInt(scanner.nextLine());
@@ -63,14 +62,6 @@ public class Main {
                         db.deleteStudent(deleteId);
                         break;
 
-                    // EXIT
-                    case 0:
-                        running = false;
-                        System.out.println("Program finished.");
-                        break;
-
-                    default:
-                        System.out.println("Invalid option.");
                 }
 
             } catch (Exception e) {
